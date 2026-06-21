@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: Appache ngnix and update
+      apt:
+        name:
+          - apache2
+          - nginx
+        update_cache: yes
+      when: ansible_facts["distribution"] == "Ubuntu"
+
+    - name: CenstOS httpd,nginx and system upodates
+      dnf:
+        name:
+          - httpd
+          - nginx
+        update_cache: yes
+      when: ansible_facts["distribution"] == "CentOS"
+          

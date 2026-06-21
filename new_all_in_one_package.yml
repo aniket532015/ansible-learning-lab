@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: Installing packages
+      package:
+        name:
+          - "{{ apache_package}}"
+          - "{{ nginx_package}}"
+        update_cache: yes
+       
