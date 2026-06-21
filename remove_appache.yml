@@ -7,7 +7,7 @@
       apt:
         update_cache : yes
     
-    - name: Install Apache2
+    - name: Remove Apache2
       apt:
         name: apache2
-        state: present
+        state: absent
