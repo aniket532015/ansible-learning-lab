@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: Installing or updating in ubuntu or debian
+      apt:
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Installing appache in ubunto
+      apt:
+        name: apache2
+        state: latest
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Installing updates in Debian
+      dnf:
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
+  
+    - name: Installing updates in CentOs
+      dnf:
+        name: httpd
+        state: latest
+      when: ansible_distribution in ["CentOS"]
+
+
+
