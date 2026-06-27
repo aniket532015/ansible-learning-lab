@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: update in Ubuntu
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_facts["pkg_mgr"]== "apt"
+
+    - name: update in CentOs
+      tags: always
+      dnf:
+        update_only: yes
+        update_cache: yes
+      when: ansible_facts["pkg_mgr"]== "dnf"
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: Create User Aniket
+      tags: always
+      user:
+        name: aniket
+        group: root
+
+    - name: add ssh key for aniket
+      tags: always
+      authorized_key:
+        user: aniket
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIChXMru0Oj3fUfEuJ7P+aBIFfauHRGOQ+jS8wl39Gaij test"
+
+    - name: add suder file for aniket
+      tags: always
+      copy:
+        src: sudoer_aniket
+        dest: /etc/sudoers.d/aniket
+        owner: root
+        group: root
+        mode: 0440
